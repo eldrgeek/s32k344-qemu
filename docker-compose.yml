@@ -1,0 +1,104 @@
+version: '3.8'
+
+services:
+  s32k344-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: s32k344-qemu:dev
+    container_name: s32k344-dev
+    
+    # Interactive development environment
+    stdin_open: true
+    tty: true
+    
+    # Volume mounts for development
+    volumes:
+      # Source code (host project directory)
+      - .:/workspace/project:rw
+      # QEMU source code (persistent)
+      - qemu-src:/workspace/qemu-src:rw
+      # Build artifacts (persistent)
+      - qemu-build:/workspace/qemu-build:rw
+      # Zephyr SDK and projects (persistent)
+      - zephyr-data:/workspace/zephyr:rw
+      # Test artifacts (persistent)
+      - test-artifacts:/workspace/tests:rw
+      # Build cache (persistent)
+      - build-cache:/workspace/artifacts:rw
+      # SSH keys (for git operations)
+      - ~/.ssh:/home/dev/.ssh:ro
+      - ~/.gitconfig:/home/dev/.gitconfig:ro
+    
+    # Environment variables
+    environment:
+      - DISPLAY=${DISPLAY}
+      - TERM=xterm-256color
+      - PROJECT_ROOT=/workspace/project
+      - QEMU_SOURCE_DIR=/workspace/qemu-src
+      - QEMU_BUILD_DIR=/workspace/qemu-build
+      - ZEPHYR_BASE=/workspace/zephyr
+      - CROSS_COMPILE=arm-none-eabi-
+      - ARCH=arm
+      - BOARD=s32k344
+    
+    # Network configuration
+    network_mode: host
+    
+    # Privileged mode for hardware access and debugging
+    privileged: true
+    
+    # Keep container running
+    command: /bin/bash
+    
+    # Working directory
+    working_dir: /workspace/project
+
+  # Optional: Separate container for automated testing
+  s32k344-test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: s32k344-qemu:dev
+    container_name: s32k344-test
+    
+    volumes:
+      - .:/workspace/project:ro
+      - qemu-src:/workspace/qemu-src:ro
+      - qemu-build:/workspace/qemu-build:ro
+      - zephyr-data:/workspace/zephyr:ro
+      - test-artifacts:/workspace/tests:rw
+    
+    environment:
+      - PROJECT_ROOT=/workspace/project
+      - QEMU_SOURCE_DIR=/workspace/qemu-src
+      - QEMU_BUILD_DIR=/workspace/qemu-build
+      - ZEPHYR_BASE=/workspace/zephyr
+      - TEST_MODE=automated
+    
+    working_dir: /workspace/project
+    
+    # Run tests and exit
+    command: 
+      - /bin/bash
+      - -c
+      - "echo 'Test container ready. Use: docker-compose run s32k344-test ./scripts/run-tests.sh'"
+
+# Named volumes for persistent data
+volumes:
+  qemu-src:
+    driver: local
+  qemu-build:
+    driver: local
+  zephyr-data:
+    driver: local
+  test-artifacts:
+    driver: local
+  build-cache:
+    driver: local
+
+# Networks (using host network for simplicity)
+# networks:
+#   default:
+#     external: true
+#     name: host 

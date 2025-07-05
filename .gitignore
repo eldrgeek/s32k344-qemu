@@ -1,0 +1,128 @@
+# Build artifacts
+build/
+qemu-build/
+*.o
+*.a
+*.so
+*.dylib
+
+# QEMU generated files
+qemu-system-*
+qemu-img
+qemu-nbd
+qemu-io
+*.qcow2
+*.img
+*.bin
+
+# Compilation and build files
+*.d
+*.dSYM/
+*.su
+*.idb
+*.pdb
+.deps/
+.libs/
+config.log
+config.status
+config.cache
+autom4te.cache/
+Makefile
+compile_commands.json
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# IDEs and editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+*.iml
+
+# Docker
+docker-compose.override.yml
+.dockerignore
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+*.pid
+*.seed
+*.pid.lock
+*.tgz
+*.tar.gz
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Zephyr specific
+zephyr/
+.west/
+modules/
+bootloader/
+build/
+*.elf
+*.hex
+*.map
+
+# Test artifacts
+test-results/
+coverage/
+*.gcov
+*.gcda
+*.gcno
+
+# Documentation build
+docs/build/
+docs/_build/
+*.pdf
+*.aux
+*.log
+*.toc
+*.out
+
+# NXP/Freescale specific
+*.s19
+*.srec
+*.mot
+*.hex
+*.axf
+*.elf
+*.bin
+*.map
+*.sym
+
+# Reference materials (large files)
+*.pdf
+datasheets/
+reference_manuals/
+schematics/
+
+# Secrets and configuration
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.pem
+*.key 
