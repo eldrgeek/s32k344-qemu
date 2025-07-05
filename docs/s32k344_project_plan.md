@@ -24,7 +24,7 @@ qemu-s32k344/
  ├─ include/hw/... 
  └─ tests/qtest/...
 ```
-- Create branch `feature/s32k344`.
+- Create branch `first`.
 
 ## 2. Build Environment on Windows 11
 
