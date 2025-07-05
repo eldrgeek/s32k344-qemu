@@ -25,6 +25,7 @@
 #include "qemu/log.h"
 #include "qemu/error-report.h"
 #include "s32k344.h"
+#include "s32k344_lpuart.h"
 
 /* S32K344 Memory Layout */
 #define S32K344_FLASH_BASE      0x00400000  /* Program Flash - 4MB */
@@ -170,8 +171,20 @@ static void s32k344_peripheral_init(S32K344MachineState *s)
     
     /* Low Power UARTs */
     for (int i = 0; i < 4; i++) {
-        create_unimplemented_device(g_strdup_printf("s32k344.lpuart%d", i),
-                                   S32K344_LPUART0_BASE + (i * 0x1000), 0x1000);
+        s->lpuart[i] = qdev_new(TYPE_S32K344_LPUART);
+        
+        /* Connect to serial console for LPUART0 */
+        if (i == 0) {
+            qdev_prop_set_chr(s->lpuart[i], "chardev", serial_hd(0));
+        }
+        
+        sysbus_realize_and_unref(SYS_BUS_DEVICE(s->lpuart[i]), &error_fatal);
+        sysbus_mmio_map(SYS_BUS_DEVICE(s->lpuart[i]), 0, 
+                       S32K344_LPUART0_BASE + (i * 0x1000));
+        
+        /* Connect LPUART IRQ to NVIC */
+        qdev_connect_gpio_out(s->lpuart[i], 0, 
+                             qdev_get_gpio_in(DEVICE(&s->armv7m), 48 + i));
     }
     
     /* FlexCAN Controllers */
@@ -195,7 +208,7 @@ static void s32k344_peripheral_init(S32K344MachineState *s)
     create_unimplemented_device("s32k344.qspi", S32K344_QSPI_BASE, 0x1000);
     
     qemu_log_mask(LOG_GUEST_ERROR, 
-                  "S32K344: Peripherals initialized (placeholder implementations)\n");
+                  "S32K344: Peripherals initialized - LPUART0-3 functional, others placeholder\n");
 }
 
 /* Initialize the ARMv7M core */

@@ -44,7 +44,7 @@
 - [x] **Done** - [ ] **Reviewed** - Implement memory layout (Flash: 4MB at 0x00400000, SRAM: 512KB at 0x20000000)
 - [x] **Done** - [ ] **Reviewed** - Set up NVIC (Nested Vector Interrupt Controller)
 - [x] **Done** - [ ] **Reviewed** - Create SIUL2 GPIO peripheral for LED control
-- [ ] **Done** - [ ] **Reviewed** - Add basic LPUART implementation for serial output
+- [x] **Done** - [ ] **Reviewed** - Add basic LPUART implementation for serial output
 - [x] **Done** - [ ] **Reviewed** - Create demo firmware with GPIO blinky and UART output
 
 ## Demo Validation Framework

@@ -21,13 +21,13 @@
 #define SCB_VTOR            (SCB_BASE + 0x08)
 
 /* SIUL2 GPIO Controller */
-#define SIUL2_BASE          0x40A00000
+#define SIUL2_BASE          0x40290000
 #define SIUL2_MSCR_BASE     (SIUL2_BASE + 0x0240)
 #define SIUL2_GPDO_BASE     (SIUL2_BASE + 0x1300)
 #define SIUL2_GPDI_BASE     (SIUL2_BASE + 0x1500)
 
 /* LPUART (Low Power UART) */
-#define LPUART0_BASE        0x40010000
+#define LPUART0_BASE        0x40328000
 #define LPUART_GLOBAL       (LPUART0_BASE + 0x0008)
 #define LPUART_PINCFG       (LPUART0_BASE + 0x000C)
 #define LPUART_BAUD         (LPUART0_BASE + 0x0010)

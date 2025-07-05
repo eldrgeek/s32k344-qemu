@@ -84,12 +84,22 @@ static void test_s32k344_lpuart_registers(void)
     
     qts = qtest_init("-M s32k344");
     
-    /* Test LPUART0 base register access */
-    /* Note: This will test basic register accessibility once LPUART is implemented */
+    /* Test LPUART0 Version ID register */
+    val = qtest_readl(qts, S32K344_LPUART0_BASE + 0x00);
+    g_assert_cmpuint(val, ==, 0x04030003);  /* Version 4.3.3 */
     
-    /* For now, just test that we can access the memory region without crash */
-    val = qtest_readl(qts, S32K344_LPUART0_BASE);
-    (void)val; /* Suppress unused variable warning */
+    /* Test LPUART0 Parameter register */
+    val = qtest_readl(qts, S32K344_LPUART0_BASE + 0x04);
+    g_assert_cmpuint(val, ==, 0x0F0F);  /* 16-byte TX/RX FIFO */
+    
+    /* Test LPUART0 Control register write/read */
+    qtest_writel(qts, S32K344_LPUART0_BASE + 0x18, 0x00080000);  /* Enable transmitter */
+    val = qtest_readl(qts, S32K344_LPUART0_BASE + 0x18);
+    g_assert_cmpuint(val, ==, 0x00080000);
+    
+    /* Test LPUART0 Status register (should have TDRE and TC bits set) */
+    val = qtest_readl(qts, S32K344_LPUART0_BASE + 0x14);
+    g_assert((val & 0x00C00000) != 0);  /* TDRE and TC bits should be set */
     
     qtest_quit(qts);
 }
@@ -153,11 +163,24 @@ static void test_s32k344_gpio_blinky(void)
 static void test_s32k344_uart_echo(void)
 {
     QTestState *qts;
+    uint32_t val;
     
     qts = qtest_init("-M s32k344");
     
-    /* This test will validate UART echo functionality */
-    /* Implementation will follow LPUART peripheral development */
+    /* Enable LPUART0 transmitter and receiver */
+    qtest_writel(qts, S32K344_LPUART0_BASE + 0x18, 0x000C0000);  /* Enable TX and RX */
+    
+    /* Check that transmitter is enabled */
+    val = qtest_readl(qts, S32K344_LPUART0_BASE + 0x18);
+    g_assert((val & 0x00080000) != 0);  /* TE bit should be set */
+    g_assert((val & 0x00040000) != 0);  /* RE bit should be set */
+    
+    /* Test data register write (simulates transmit) */
+    qtest_writel(qts, S32K344_LPUART0_BASE + 0x1C, 0x48);  /* Send 'H' */
+    
+    /* Check that status register indicates transmission ready */
+    val = qtest_readl(qts, S32K344_LPUART0_BASE + 0x14);
+    g_assert((val & 0x00800000) != 0);  /* TDRE bit should be set */
     
     qtest_quit(qts);
 }
