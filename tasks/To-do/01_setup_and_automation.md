@@ -1,53 +1,47 @@
-# Setup and Automation Tasks - macOS/Docker Fast Track
+# Setup and Automation Tasks
 
-## Docker Environment Setup (Priority 1)
-- [x] **Done** - [ ] **Reviewed** - Create Dockerfile with Ubuntu 24.04 + ARM cross-compilation tools
-- [x] **Done** - [ ] **Reviewed** - Set up Docker container with QEMU build dependencies
-- [x] **Done** - [ ] **Reviewed** - Configure Docker for ARM binary execution with qemu-user-static
-- [x] **Done** - [ ] **Reviewed** - Create docker-compose.yml for development environment
-- [x] **Done** - [ ] **Reviewed** - Set up volume mounts for source code and build artifacts
+## Build Environment & Automation
 
-## Essential Repository Setup
-- [ ] **Done** - [ ] **Reviewed** - Clone QEMU upstream source (≥ v9.0) 
-- [ ] **Done** - [ ] **Reviewed** - Create repository structure and `feature/s32k344` branch
-- [x] **Done** - [ ] **Reviewed** - Set up basic .gitignore for QEMU project
+### Environment Setup
+- [ ] **Done** - [ ] **Reviewed** - Install MSYS2 on Windows 11 and update packages
+- [ ] **Done** - [ ] **Reviewed** - Install mingw-w64 toolchain and QEMU dependencies
+- [ ] **Done** - [ ] **Reviewed** - Create Docker environment with Ubuntu 24.04 base
+- [ ] **Done** - [ ] **Reviewed** - Configure Docker for ARM binary execution with qemu-user-static
+- [ ] **Done** - [ ] **Reviewed** - Set up repository structure and create `feature/s32k344` branch
 
-## TDD Infrastructure (Minimal for Demo)
-- [ ] **Done** - [ ] **Reviewed** - Set up qtest framework for device-level tests
-- [ ] **Done** - [ ] **Reviewed** - Create basic test automation scripts
-- [ ] **Done** - [ ] **Reviewed** - Configure simple test result reporting
-
-## Reference Materials (Playwright MCP - Host)
-- [ ] **Done** - [ ] **Reviewed** - Download NXP S32K3xx Reference Manual via web automation
+### Reference Materials Acquisition (Playwright MCP)
+- [ ] **Done** - [ ] **Reviewed** - Download NXP S32K3xx Reference Manual & Datasheet via web automation
 - [ ] **Done** - [ ] **Reviewed** - Acquire CMSIS Device Header `S32K344.h` from official sources
-- [ ] **Done** - [ ] **Reviewed** - Download Zephyr MR-CANHUBK3 Board Support files
+- [ ] **Done** - [ ] **Reviewed** - Download Renode S32K388 Models & Scripts from GitHub
+- [ ] **Done** - [ ] **Reviewed** - Get Zephyr MR-CANHUBK3 Board Support files via web automation
+- [ ] **Done** - [ ] **Reviewed** - Download Ceedling + Unity + CMock testing framework
+- [ ] **Done** - [ ] **Reviewed** - Clone QEMU upstream source (≥ v9.0) 
 
-## Build System (Docker-based)
+### TDD Infrastructure Setup
+- [ ] **Done** - [ ] **Reviewed** - Set up Ceedling project structure for unit tests
+- [ ] **Done** - [ ] **Reviewed** - Configure Unity test framework with custom assertions
+- [ ] **Done** - [ ] **Reviewed** - Set up CMock for peripheral register mocking
+- [ ] **Done** - [ ] **Reviewed** - Create qtest framework setup for device-level tests
+- [ ] **Done** - [ ] **Reviewed** - Configure Zephyr test environment for firmware-level tests
+
+### CI/CD Pipeline Automation
+- [ ] **Done** - [ ] **Reviewed** - Create GitHub Actions workflow file
+- [ ] **Done** - [ ] **Reviewed** - Set up Docker build automation
+- [ ] **Done** - [ ] **Reviewed** - Configure automated qtest execution
+- [ ] **Done** - [ ] **Reviewed** - Set up Zephyr test automation scripts
+- [ ] **Done** - [ ] **Reviewed** - Create Ceedling test automation integration
+- [ ] **Done** - [ ] **Reviewed** - Set up artifact collection for test results
+
+### Build System Configuration
 - [ ] **Done** - [ ] **Reviewed** - Create Meson build configuration for S32K344 target
-- [ ] **Done** - [ ] **Reviewed** - Set up cross-compilation for ARM Cortex-M7 in Docker
-- [ ] **Done** - [ ] **Reviewed** - Create build scripts for Docker environment
-- [ ] **Done** - [ ] **Reviewed** - Configure incremental build optimization
+- [ ] **Done** - [ ] **Reviewed** - Set up cross-compilation for ARM Cortex-M7
+- [ ] **Done** - [ ] **Reviewed** - Configure target-specific build flags
+- [ ] **Done** - [ ] **Reviewed** - Create build scripts for both MSYS2 and Docker
+- [ ] **Done** - [ ] **Reviewed** - Set up incremental build optimization
 
-## Zephyr Integration (Essential for Demo)
-- [ ] **Done** - [ ] **Reviewed** - Set up Zephyr SDK in Docker container
-- [ ] **Done** - [ ] **Reviewed** - Configure Zephyr build environment for S32K344
-- [ ] **Done** - [ ] **Reviewed** - Create automated Zephyr sample execution
-- [ ] **Done** - [ ] **Reviewed** - Set up Zephyr board definition template
-
-## Basic CI/CD (Local Docker)
-- [ ] **Done** - [ ] **Reviewed** - Create local build and test automation
-- [ ] **Done** - [ ] **Reviewed** - Set up basic test execution pipeline
-- [ ] **Done** - [ ] **Reviewed** - Configure artifact collection
-
-## Demo Validation Framework
-- [ ] **Done** - [ ] **Reviewed** - Create "Hello World" semihosting test
-- [ ] **Done** - [ ] **Reviewed** - Set up GPIO blinky validation
-- [ ] **Done** - [ ] **Reviewed** - Create simple UART echo test
-- [ ] **Done** - [ ] **Reviewed** - Configure automated demo execution
-
-## ~~Deferred for Windows Conversion~~
-- ~~MSYS2 setup~~ (Convert later)
-- ~~Windows-specific build instructions~~ (Convert later)
-- ~~Complex CI/CD with GitHub Actions~~ (Phase 2)
-- ~~Ceedling + Unity + CMock~~ (Phase 2)
-- ~~Comprehensive test coverage~~ (Phase 2) 
+### Test Automation Framework
+- [ ] **Done** - [ ] **Reviewed** - Create automated test discovery and execution
+- [ ] **Done** - [ ] **Reviewed** - Set up test result aggregation and reporting
+- [ ] **Done** - [ ] **Reviewed** - Create test coverage measurement automation
+- [ ] **Done** - [ ] **Reviewed** - Set up continuous integration test triggers
+- [ ] **Done** - [ ] **Reviewed** - Create test failure notification system 

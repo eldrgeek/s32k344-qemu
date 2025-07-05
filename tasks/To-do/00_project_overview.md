@@ -1,94 +1,125 @@
-# S32K344 QEMU Project - Fast Track Demo
+# S32K344 QEMU Project - Task Overview
 
 ## Project Summary
-This project demonstrates a complete LLM-driven development workflow by implementing a QEMU machine model for the NXP S32K344 ARM Cortex-M7 microcontroller. **Primary goal: Fastest path to working demo on macOS/Docker, with Windows conversion as Phase 2.**
+This project implements a complete QEMU machine model for the NXP S32K344 ARM Cortex-M7 microcontroller, following Test-Driven Development (TDD) principles. The implementation includes peripheral devices, firmware testing, and upstream integration.
 
-## Fast Track Strategy (Phase 1)
+## Task Files Organization
+All tasks are organized in the `tasks/To-do/` directory with the following structure:
 
-### Core Demo Components
-1. **Docker Environment** - Complete development environment in containers
-2. **Basic Machine (WP-0)** - Minimal S32K344-EVB with semihosting
-3. **LPUART (WP-1)** - Console output for "Hello World"
-4. **GPIO (WP-3)** - Pin control for "blinky" LED demo
-5. **Essential Testing** - Prove the workflow works end-to-end
+### 01. Setup and Automation (`01_setup_and_automation.md`)
+- Build environment setup (MSYS2 & Docker)
+- Reference materials acquisition (Playwright MCP for web automation)
+- TDD infrastructure setup (Ceedling, Unity, CMock)
+- CI/CD pipeline automation
+- Test automation framework
 
-### Deferred to Phase 2 (Windows Conversion)
-- MSYS2/Windows native builds
-- Complex timer implementation (WP-2)
-- FlexCAN implementation (WP-4)
-- Comprehensive peripheral stubs (WP-5/6/7)
-- Full documentation suite (WP-8)
-- Extensive firmware testing (WP-9)
+### 02. Machine Skeleton (`02_wp0_skeleton_machine.md`)
+- Basic S32K344-EVB machine implementation
+- Memory map configuration
+- Boot sequence and semihosting
+- Acceptance: Boot "Hello World" via semihosting
 
-## Revised Task Priority
+### 03. LPUART Device (`03_wp1_lpuart_device.md`)
+- Complete LPUART peripheral implementation
+- Register map, FIFO, interrupts, character backend
+- Acceptance: `puts()` echoes to QEMU stdout
 
-### Week 1: Foundation (Critical Path)
-- [ ] **Done** - [ ] **Reviewed** - Docker environment setup (`01_setup_and_automation.md`)
-- [ ] **Done** - [ ] **Reviewed** - Basic machine skeleton (`02_wp0_skeleton_machine.md`)
+### 04. System Timer & NVIC (`04_wp2_system_timer_nvic.md`)
+- STM (System Timer Module) implementation
+- NVIC integration and interrupt handling
+- Acceptance: 1ms tick qtest passes
 
-### Week 2: Core Functionality
-- [ ] **Done** - [ ] **Reviewed** - LPUART for output (`03_wp1_lpuart_device.md`)
-- [ ] **Done** - [ ] **Reviewed** - GPIO for blinky (`05_wp3_gpio_siul2.md`)
+### 05. GPIO/SIUL2 (`05_wp3_gpio_siul2.md`)
+- Complete GPIO and SIUL2 implementation
+- Pin configuration, multiplexing, interrupts
+- Acceptance: Pin toggle qtest passes
 
-### Week 3: Demo Validation
-- [ ] **Done** - [ ] **Reviewed** - Zephyr "Hello World" working
-- [ ] **Done** - [ ] **Reviewed** - Zephyr "blinky" working
-- [ ] **Done** - [ ] **Reviewed** - Demo recording and documentation
+### 06. FlexCAN (`06_wp4_flexcan.md`)
+- Complete FlexCAN implementation with loopback
+- Message buffers, frame processing, error handling
+- Acceptance: Zephyr CAN loopback sample PASS
 
-## Fast Track Acceptance Criteria
+### 07. Peripheral Stubs & Clock Tree (`07_wp5_wp6_wp7_peripheral_stubs.md`)
+- WP-5: Peripheral stubs (GMAC, additional CAN, ADC, etc.)
+- WP-6: Clock tree MC_ME/MC_CGM stubs
+- WP-7: Dual-core lockstep placeholder
+- Acceptance: No crash on peripheral access, Zephyr boots
 
-### Minimum Viable Demo
-- [ ] **Done** - [ ] **Reviewed** - Boot semihosting "Hello World" (WP-0)
-- [ ] **Done** - [ ] **Reviewed** - Console output via LPUART (WP-1)
-- [ ] **Done** - [ ] **Reviewed** - GPIO LED blinky working (WP-3)
-- [ ] **Done** - [ ] **Reviewed** - All development in Docker containers
+### 08. Documentation & Upstream (`08_wp8_documentation_upstream.md`)
+- Complete documentation suite
+- Upstream patch series preparation
+- Community engagement and code review
+- Acceptance: `docs/system/arm/s32k344.rst` added
+
+### 09. Firmware Testing (`09_firmware_testing.md`)
+- Comprehensive Zephyr testing
+- GPIO, UART, CAN, kernel tests
+- Real-time performance validation
+- Acceptance: All Zephyr samples PASS
+
+## Key Implementation Principles
+
+### Test-Driven Development (TDD)
+- [ ] **Done** - [ ] **Reviewed** - All device implementations start with failing tests
+- [ ] **Done** - [ ] **Reviewed** - Unit tests using Ceedling + Unity + CMock
+- [ ] **Done** - [ ] **Reviewed** - Device-level qtests for register operations
+- [ ] **Done** - [ ] **Reviewed** - Firmware-level tests using Zephyr samples
+- [ ] **Done** - [ ] **Reviewed** - Continuous integration with automated test execution
+
+### Automation-First Approach
+- [ ] **Done** - [ ] **Reviewed** - Playwright MCP for web-based resource acquisition
 - [ ] **Done** - [ ] **Reviewed** - Automated build and test pipeline
-- [ ] **Done** - [ ] **Reviewed** - LLM-driven workflow demonstrated
+- [ ] **Done** - [ ] **Reviewed** - Automated documentation generation
+- [ ] **Done** - [ ] **Reviewed** - Automated upstream patch preparation
 
-### Success Metrics
-- [ ] **Done** - [ ] **Reviewed** - Zephyr "Hello World" sample runs
-- [ ] **Done** - [ ] **Reviewed** - Zephyr "blinky" sample shows GPIO toggles
-- [ ] **Done** - [ ] **Reviewed** - Complete workflow from blank repo to working demo
-- [ ] **Done** - [ ] **Reviewed** - Repeatable in clean Docker environment
+### Quality Assurance
+- [ ] **Done** - [ ] **Reviewed** - Code review process for all implementations
+- [ ] **Done** - [ ] **Reviewed** - Static analysis and memory leak detection
+- [ ] **Done** - [ ] **Reviewed** - Performance profiling and optimization
+- [ ] **Done** - [ ] **Reviewed** - Comprehensive test coverage measurement
 
-## Development Environment
+## Milestone Schedule (6 weeks)
 
-### macOS Host + Docker Containers
-- **Host**: macOS development tools, Playwright MCP for web automation
-- **Docker**: Ubuntu 24.04 + ARM cross-compilation + QEMU build environment
-- **Integration**: Volume mounts for source code, automated build/test
+| Week | Deliverables | Task Files |
+|------|-------------|------------|
+| 1 | Build environment + WP-0 | 01, 02 |
+| 2 | LPUART implementation | 03 |
+| 3 | Timer + GPIO implementation | 04, 05 |
+| 4 | FlexCAN implementation | 06 |
+| 5 | Peripheral stubs + Clock tree | 07 |
+| 6 | Documentation + Upstream | 08, 09 |
 
-### LLM-Driven Workflow
-- **Code Generation**: LLM implements all C code for peripherals
-- **Web Automation**: Playwright MCP handles reference material downloads
-- **Test Automation**: LLM creates and runs all validation tests
-- **Documentation**: Automated generation of technical documentation
+## Acceptance Criteria Summary
 
-## Fast Track Task Files
+### Technical Milestones
+- [ ] **Done** - [ ] **Reviewed** - Boot semihosting "Hello World" (WP-0)
+- [ ] **Done** - [ ] **Reviewed** - `puts()` echoes to QEMU stdout (WP-1)
+- [ ] **Done** - [ ] **Reviewed** - 1ms tick qtest passes (WP-2)
+- [ ] **Done** - [ ] **Reviewed** - Pin toggle qtest passes (WP-3)
+- [ ] **Done** - [ ] **Reviewed** - Zephyr CAN loopback sample PASS (WP-4)
+- [ ] **Done** - [ ] **Reviewed** - No crash on peripheral access (WP-5)
+- [ ] **Done** - [ ] **Reviewed** - Zephyr boots without assert (WP-6)
+- [ ] **Done** - [ ] **Reviewed** - Single core mirrored (WP-7)
+- [ ] **Done** - [ ] **Reviewed** - `docs/system/arm/s32k344.rst` added (WP-8)
 
-### Phase 1 (Demo) - Priority Order
-1. **`01_setup_and_automation.md`** - Docker environment (CRITICAL)
-2. **`02_wp0_skeleton_machine.md`** - Basic machine (CRITICAL)
-3. **`03_wp1_lpuart_device.md`** - Console output (CRITICAL)
-4. **`05_wp3_gpio_siul2.md`** - GPIO for blinky (CRITICAL)
-5. **`09_firmware_testing.md`** - Essential Zephyr tests (CRITICAL)
+### Firmware Validation
+- [ ] **Done** - [ ] **Reviewed** - Zephyr blinky: GPIO toggle logs
+- [ ] **Done** - [ ] **Reviewed** - Zephyr can/loopback: PASS
+- [ ] **Done** - [ ] **Reviewed** - Zephyr uart_async_api: PASS
+- [ ] **Done** - [ ] **Reviewed** - Zephyr kernel common: All sub-tests PASS
 
-### Phase 2 (Windows + Full Features) - Deferred
-- `04_wp2_system_timer_nvic.md` - Complex timer implementation
-- `06_wp4_flexcan.md` - CAN bus implementation  
-- `07_wp5_wp6_wp7_peripheral_stubs.md` - Additional peripherals
-- `08_wp8_documentation_upstream.md` - Full documentation
+## Risk Mitigation
+- [ ] **Done** - [ ] **Reviewed** - Spec validation with Renode reference
+- [ ] **Done** - [ ] **Reviewed** - Cycle-based timing tests to avoid timer skew
+- [ ] **Done** - [ ] **Reviewed** - Begin CAN implementation with simple loopback
+- [ ] **Done** - [ ] **Reviewed** - Full emulation mode for CI stability
 
-## Getting Started (Fast Track)
-1. **START HERE**: `01_setup_and_automation.md` - Docker setup
-2. **Follow Critical Path**: Focus only on Phase 1 tasks
-3. **Test Early**: Validate each component immediately
-4. **Demo First**: Get working example before adding complexity
-5. **Document Success**: Capture the workflow for Phase 2 conversion
-
-## Success Definition
-**Demo Success**: Show a complete LLM-driven development workflow that takes a blank repository and produces a working QEMU machine model running real firmware (Zephyr) in Docker containers on macOS.
+## Getting Started
+1. Begin with task file `01_setup_and_automation.md`
+2. Follow TDD principles - write tests first
+3. Use Playwright MCP for web automation tasks
+4. Move completed tasks to `tasks/Review/` then `tasks/Done/`
+5. Update checkboxes as: `[x] **Done** - [ ] **Reviewed**` and `[x] **Done** - [x] **Reviewed**`
 
 ---
-*Fast Track: ~50 critical tasks | Full Project: 400+ tasks*
-*Target: 3 weeks to working demo | Phase 2: Windows conversion + full features* 
+*Total estimated tasks: 400+ individual tasks across 9 major work packages* 
